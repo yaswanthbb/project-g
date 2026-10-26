@@ -17,6 +17,7 @@
   },
   "type": "module",
   "devDependencies": {
+    "@grpc/grpc-js": "^1.14.6",
     "prettier": "^3.9.10",
     "react": "19.3.0",
     "react-dom": "19.3.0",

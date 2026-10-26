@@ -213,7 +213,17 @@ export function TodayPage() {
         {data.new_gigs.length ? (
           <div className="waiting-list">
             {data.new_gigs.map((g) => (
-              <div className="waiting-row" key={g.id}><div><h3>{g.business_name}</h3><p className="muted">{[g.business_type,g.city_area].filter(Boolean).join(" · ")}</p></div><Link className="button secondary small" to={`/gigs/${g.id}`}>Review gig <ArrowRight size={16}/></Link></div>
+              <div className="waiting-row" key={g.id}>
+                <div>
+                  <h3>{g.business_name}</h3>
+                  <p className="muted">
+                    {[g.business_type, g.city_area].filter(Boolean).join(" · ")}
+                  </p>
+                </div>
+                <Link className="button secondary small" to={`/gigs/${g.id}`}>
+                  Review gig <ArrowRight size={16} />
+                </Link>
+              </div>
             ))}
           </div>
         ) : (
@@ -317,9 +327,12 @@ export function GigDetail({ gig }: { gig: Gig }) {
   const [sheet, setSheet] = useState<
     "call" | "pricing" | "edit" | "Won" | "Paid advance" | null
   >(null);
-  const [draft, setDraft] = useState({original:gig.notes,value:gig.notes});
+  const [draft, setDraft] = useState({ original: gig.notes, value: gig.notes });
   const notes = draft.value === draft.original ? gig.notes : draft.value;
-  const notesConflict = draft.value !== draft.original && gig.notes !== draft.original && gig.notes !== draft.value;
+  const notesConflict =
+    draft.value !== draft.original &&
+    gig.notes !== draft.original &&
+    gig.notes !== draft.value;
   const patch = useGigMutation(gig.id);
   const cache = useQueryClient();
   const step = useMutation({
@@ -499,12 +512,37 @@ export function GigDetail({ gig }: { gig: Gig }) {
           </section>
           <section className="panel">
             <h2>Your notes</h2>
-            {notesConflict && <div className="hint"><p>Notes changed on another device. Your draft is kept.</p><p>Saved notes: {gig.notes || "Empty"}</p><button className="button secondary small" onClick={()=>setDraft({original:gig.notes,value:gig.notes})}>Use saved notes</button><button className="button secondary small" onClick={()=>setDraft({...draft,original:gig.notes})}>Keep my draft for saving</button></div>}
+            {notesConflict && (
+              <div className="hint">
+                <p>Notes changed on another device. Your draft is kept.</p>
+                <p>Saved notes: {gig.notes || "Empty"}</p>
+                <button
+                  className="button secondary small"
+                  onClick={() =>
+                    setDraft({ original: gig.notes, value: gig.notes })
+                  }
+                >
+                  Use saved notes
+                </button>
+                <button
+                  className="button secondary small"
+                  onClick={() => setDraft({ ...draft, original: gig.notes })}
+                >
+                  Keep my draft for saving
+                </button>
+              </div>
+            )}
             <textarea
               aria-label="Gig notes"
               rows={4}
               value={notes}
-              onChange={(e) => setDraft({original:draft.value===draft.original ? gig.notes:draft.original,value:e.target.value})}
+              onChange={(e) =>
+                setDraft({
+                  original:
+                    draft.value === draft.original ? gig.notes : draft.original,
+                  value: e.target.value,
+                })
+              }
               placeholder="Call details, replies, anything to remember…"
             />
             <div className="notes-footer">
@@ -518,7 +556,21 @@ export function GigDetail({ gig }: { gig: Gig }) {
               <button
                 className="button secondary"
                 disabled={patch.isPending || notes === gig.notes}
-                onClick={() => patch.mutate({ notes, notes_original:draft.value===draft.original ? gig.notes:draft.original },{onSuccess:saved=>setDraft({original:saved.notes,value:saved.notes})})}
+                onClick={() =>
+                  patch.mutate(
+                    {
+                      notes,
+                      notes_original:
+                        draft.value === draft.original
+                          ? gig.notes
+                          : draft.original,
+                    },
+                    {
+                      onSuccess: (saved) =>
+                        setDraft({ original: saved.notes, value: saved.notes }),
+                    },
+                  )
+                }
               >
                 Save notes
               </button>

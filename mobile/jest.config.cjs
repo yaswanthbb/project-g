@@ -1,1 +1,10 @@
-module.exports={preset:"jest-expo",testMatch:["<rootDir>/src/**/*.test.tsx"],setupFilesAfterEnv:["<rootDir>/jest.setup.cjs"],moduleNameMapper:{"^@gigs/shared$":"<rootDir>/../shared/src/index.ts"},transformIgnorePatterns:["node_modules/(?!(react-native|@react-native|@react-native-community|@react-native-picker|expo|@expo|@gigs|test-renderer))"],testTimeout:15000};
+module.exports = {
+  preset: "jest-expo",
+  testMatch: ["<rootDir>/src/**/*.test.tsx"],
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.cjs"],
+  moduleNameMapper: { "^@gigs/shared$": "<rootDir>/../shared/src/index.ts" },
+  transformIgnorePatterns: [
+    "node_modules/(?!(react-native|@react-native|@react-native-community|@react-native-picker|expo|@expo|@gigs|test-renderer))",
+  ],
+  testTimeout: 15000,
+};

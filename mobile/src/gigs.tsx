@@ -147,7 +147,15 @@ export function TodayScreen() {
       <Section title={`New gigs waiting · ${data.new_gigs.length}`}>
         {data.new_gigs.length ? (
           data.new_gigs.map((g) => (
-            <Card key={g.id}><Body>{g.business_name}</Body><Body muted>{[g.business_type,g.city_area].filter(Boolean).join(" · ")}</Body><Button secondary onPress={()=>openGig(g.id)}>Review gig</Button></Card>
+            <Card key={g.id}>
+              <Body>{g.business_name}</Body>
+              <Body muted>
+                {[g.business_type, g.city_area].filter(Boolean).join(" · ")}
+              </Body>
+              <Button secondary onPress={() => openGig(g.id)}>
+                Review gig
+              </Button>
+            </Card>
           ))
         ) : (
           <Body muted>
@@ -252,9 +260,12 @@ export function GigDetail({
   const [sheet, setSheet] = useState<
     "call" | "pricing" | "edit" | "payments" | "Won" | "Paid advance" | null
   >(null);
-  const [draft, setDraft] = useState({original:gig.notes,value:gig.notes});
+  const [draft, setDraft] = useState({ original: gig.notes, value: gig.notes });
   const notes = draft.value === draft.original ? gig.notes : draft.value;
-  const notesConflict = draft.value !== draft.original && gig.notes !== draft.original && gig.notes !== draft.value;
+  const notesConflict =
+    draft.value !== draft.original &&
+    gig.notes !== draft.original &&
+    gig.notes !== draft.value;
   const patch = usePatch(gig.id);
   const step = useMutation({
     mutationFn: ({ id, done }: { id: string; done: boolean }) =>
@@ -425,18 +436,55 @@ export function GigDetail({
       </Card>
       <Card>
         <H2>Your notes</H2>
-            {notesConflict && <><Body>Notes changed on another device. Your draft is kept.</Body><Body muted>Saved notes: {gig.notes || "Empty"}</Body><Button secondary onPress={()=>setDraft({original:gig.notes,value:gig.notes})}>Use saved notes</Button><Button secondary onPress={()=>setDraft({...draft,original:gig.notes})}>Keep my draft for saving</Button></>}
+        {notesConflict && (
+          <>
+            <Body>Notes changed on another device. Your draft is kept.</Body>
+            <Body muted>Saved notes: {gig.notes || "Empty"}</Body>
+            <Button
+              secondary
+              onPress={() =>
+                setDraft({ original: gig.notes, value: gig.notes })
+              }
+            >
+              Use saved notes
+            </Button>
+            <Button
+              secondary
+              onPress={() => setDraft({ ...draft, original: gig.notes })}
+            >
+              Keep my draft for saving
+            </Button>
+          </>
+        )}
         <Field
           label="Gig notes"
           multiline
           value={notes}
-          onChangeText={value=>setDraft({original:draft.value===draft.original ? gig.notes:draft.original,value})}
+          onChangeText={(value) =>
+            setDraft({
+              original:
+                draft.value === draft.original ? gig.notes : draft.original,
+              value,
+            })
+          }
           placeholder="Call details, replies, anything to remember…"
         />
         <Button
           secondary
           disabled={patch.isPending || notes === gig.notes}
-          onPress={() => patch.mutate({notes,notes_original:draft.value===draft.original ? gig.notes:draft.original},{onSuccess:saved=>setDraft({original:saved.notes,value:saved.notes})})}
+          onPress={() =>
+            patch.mutate(
+              {
+                notes,
+                notes_original:
+                  draft.value === draft.original ? gig.notes : draft.original,
+              },
+              {
+                onSuccess: (saved) =>
+                  setDraft({ original: saved.notes, value: saved.notes }),
+              },
+            )
+          }
         >
           Save notes
         </Button>

@@ -23,3 +23,11 @@ google-services.json
 *.keystore
 playwright-report/
 test-results/
+
+*.tsbuildinfo
+*.apk
+*.aab
+*firebase-adminsdk*.json
+mobile/credentials.json
+backend/secrets/*
+!backend/secrets/.gitkeep

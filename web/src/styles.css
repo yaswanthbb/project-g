@@ -1211,7 +1211,8 @@ dialog header {
     max-height: 88dvh;
   }
   .step-position {
-    display: none;
+    display: block;
+    min-width: 13px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1431,4 +1432,25 @@ dialog header {
   }
 }
 
-.waiting-list{display:block}.waiting-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;border-top:1px solid var(--line)}.waiting-row h3{font-size:14px;margin-bottom:3px}.waiting-row .button{flex-shrink:0}
+.waiting-list {
+  display: block;
+}
+.waiting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+}
+.waiting-row h3 {
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+.waiting-row .button {
+  flex-shrink: 0;
+}
+
+.contact-list a {
+  min-height: 44px;
+}

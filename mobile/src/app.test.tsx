@@ -65,7 +65,12 @@ const fixture: Gig = {
   outreach_allowed: false,
 };
 const testCaches: QueryClient[] = [];
-beforeEach(() => appCache.setDefaultOptions({queries:{retry:false,gcTime:0},mutations:{gcTime:0}}));
+beforeEach(() =>
+  appCache.setDefaultOptions({
+    queries: { retry: false, gcTime: 0 },
+    mutations: { gcTime: 0 },
+  }),
+);
 afterEach(async () => {
   await cleanup();
   appCache.clear();
@@ -75,7 +80,10 @@ afterEach(async () => {
 });
 function wrap(element: React.ReactNode, api: Api) {
   const cache = new QueryClient({
-    defaultOptions: { queries: { retry: false, gcTime: 0 }, mutations: {gcTime:0} },
+    defaultOptions: {
+      queries: { retry: false, gcTime: 0 },
+      mutations: { gcTime: 0 },
+    },
   });
   testCaches.push(cache);
   return render(

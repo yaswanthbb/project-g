@@ -21,6 +21,7 @@ export default {
     versionCode: 1,
   },
   plugins: [
+    "expo-dev-client",
     "@react-native-community/datetimepicker",
     "@react-native-firebase/app",
     "@react-native-firebase/messaging",
