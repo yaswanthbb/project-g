@@ -1,0 +1,24 @@
+name: Due gig reminders
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+permissions: {}
+concurrency:
+  group: gig-reminders
+  cancel-in-progress: false
+jobs:
+  reminders:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Wake backend and process due reminders
+        env:
+          REMINDER_URL: ${{ secrets.REMINDER_URL }}
+          REMINDER_API_TOKEN: ${{ secrets.REMINDER_API_TOKEN }}
+        run: |
+          test -n "$REMINDER_URL"
+          test -n "$REMINDER_API_TOKEN"
+          curl --fail-with-body --silent --show-error --max-time 180 --request POST \
+            --header "X-Reminder-Token: $REMINDER_API_TOKEN" \
+            "$REMINDER_URL/api/internal/reminders"

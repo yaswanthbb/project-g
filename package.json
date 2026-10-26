@@ -1,0 +1,32 @@
+{
+  "name": "gig-by-gig",
+  "private": true,
+  "workspaces": [
+    "shared",
+    "web",
+    "mobile"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w web",
+    "build": "npm run build -w web",
+    "test:web": "npm run test -w web",
+    "lint": "eslint web/src shared/src mobile/src mobile/App.tsx mobile/index.js mobile/app.config.js mobile/scripts web/vite.config.ts",
+    "format": "prettier --write web/src shared/src mobile/src mobile/App.tsx mobile/index.js mobile/app.config.js mobile/scripts web/vite.config.ts eslint.config.js",
+    "check:mobile": "npm run check -w mobile",
+    "test:mobile": "npm run test -w mobile"
+  },
+  "type": "module",
+  "devDependencies": {
+    "prettier": "^3.9.10",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "vite": "8.3.5"
+  },
+  "overrides": {
+    "vite": "8.3.5",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-test-renderer": "19.3.0",
+    "@grpc/grpc-js": "^1.14.6"
+  }
+}

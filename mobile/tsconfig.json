@@ -1,0 +1,1 @@
+{"extends":"expo/tsconfig.base","compilerOptions":{"strict":true,"noEmit":true,"types":["jest"]},"include":["App.tsx","src/**/*.ts","src/**/*.tsx","../shared/src/**/*.ts"]}

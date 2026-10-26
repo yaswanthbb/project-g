@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: project-g-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.14.4
+      - key: DATABASE_URL
+        sync: false
+      - key: INITIAL_PASSWORD
+        sync: false
+      - key: MUSE_API_TOKEN
+        sync: false
+      - key: REMINDER_API_TOKEN
+        sync: false
+      - key: FRONTEND_ORIGINS
+        sync: false
+      - key: FIREBASE_SERVICE_ACCOUNT_PATH
+        sync: false
+      - key: APP_TIMEZONE
+        value: Asia/Kolkata

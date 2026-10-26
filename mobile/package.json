@@ -1,0 +1,40 @@
+{
+  "name": "@gigs/mobile",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "node scripts/check-config.mjs && expo start --dev-client",
+    "android": "node scripts/check-config.mjs && expo run:android",
+    "check": "tsc --noEmit",
+    "check:bundle": "GIGS_LOCAL_CHECK=1 expo export --platform android --output-dir dist",
+    "test": "jest --runInBand",
+    "eas-build-pre-install": "node scripts/check-config.mjs"
+  },
+  "dependencies": {
+    "@gigs/shared": "1.0.0",
+    "@react-native-community/datetimepicker": "9.2.1",
+    "@react-native-firebase/app": "^26.4.1",
+    "@react-native-firebase/messaging": "^26.4.1",
+    "@react-native-picker/picker": "2.11.4",
+    "@tanstack/react-query": "^5.80.0",
+    "expo": "^58.0.19",
+    "expo-clipboard": "~58.0.4",
+    "expo-crypto": "~58.0.7",
+    "expo-notifications": "~58.1.6",
+    "expo-secure-store": "~58.0.2",
+    "react": "19.3.0",
+    "react-native": "0.88.0",
+    "react-native-safe-area-context": "~5.10.1"
+  },
+  "devDependencies": {
+    "@testing-library/react-native": "^14.1.0",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.0.0",
+    "jest": "~30.5.2",
+    "jest-expo": "~58.0.12",
+    "react-test-renderer": "19.3.0",
+    "typescript": "~6.0.3",
+    "dotenv": "^17.3.1"
+  }
+}

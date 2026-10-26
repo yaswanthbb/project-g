@@ -1,0 +1,12 @@
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { vi, test, expect, afterEach } from "vitest";
+import { createApi, type Gig } from "@gigs/shared";
+import { GigDetail } from "./gigs";
+vi.mock("./api",()=>({api:vi.fn(async()=>[]),SESSION_KEY:"gig-session"}));
+afterEach(()=>vi.unstubAllGlobals());
+const fixture={id:"test-gig",business_name:"TEST ONLY",business_type:"salon",city_area:"Pune",status:"Approved",notes:"Initial note",outreach_whatsapp:"Hello",outreach_email:"Hi",outreach_allowed:true,call_script:"Ask scope first",problem_noticed:"No website",why_it_fits:"Simple site",steps:[],completed_steps:0,total_steps:0} as unknown as Gig;
+test("untouched notes follow remote edits while a local draft survives a remote edit",async()=>{const user=userEvent.setup();const cache=new QueryClient({defaultOptions:{queries:{retry:false,gcTime:0}}});const view=(gig:Gig)=><QueryClientProvider client={cache}><MemoryRouter><GigDetail gig={gig}/></MemoryRouter></QueryClientProvider>;const rendered=render(view(fixture));expect(screen.getByLabelText("Gig notes")).toHaveValue("Initial note");rendered.rerender(view({...fixture,notes:"Saved on phone"}));expect(screen.getByLabelText("Gig notes")).toHaveValue("Saved on phone");await user.clear(screen.getByLabelText("Gig notes"));await user.type(screen.getByLabelText("Gig notes"),"Laptop draft");rendered.rerender(view({...fixture,notes:"A newer phone note"}));expect(screen.getByLabelText("Gig notes")).toHaveValue("Laptop draft");expect(screen.getByText("Notes changed on another device. Your draft is kept.")).toBeVisible();await user.click(screen.getByRole("button",{name:"Use saved notes"}));expect(screen.getByLabelText("Gig notes")).toHaveValue("A newer phone note");rendered.unmount();cache.clear();});
+test("a stale unauthorized response cannot log out a newer session",async()=>{let token="old-session";let respond:(value:Response)=>void=()=>{};const unauthorized=vi.fn();vi.stubGlobal("fetch",vi.fn(()=>new Promise<Response>(resolve=>{respond=resolve;})));const api=createApi("https://example.invalid",()=>token,unauthorized);const request=api("/today").catch(e=>e);token="new-session";respond({ok:false,status:401,json:async()=>({detail:"Please log in to continue"})} as Response);await request;expect(unauthorized).not.toHaveBeenCalled();});
