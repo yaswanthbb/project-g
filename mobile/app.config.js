@@ -21,6 +21,8 @@ export default {
     versionCode: 1,
   },
   plugins: [
+    // Manifest mods run in reverse registration order; apply overrides last.
+    "./plugins/with-firebase-notifications.cjs",
     "expo-dev-client",
     "@react-native-community/datetimepicker",
     "@react-native-firebase/app",

@@ -6,7 +6,7 @@ export default ts.config(
   { ignores: ["dist", "test-results", "playwright-report"] },
   js.configs.recommended,
   {
-    files: ["mobile/**/*.js", "mobile/**/*.mjs"],
+    files: ["mobile/**/*.js", "mobile/**/*.mjs", "mobile/**/*.cjs"],
     languageOptions: { globals: globals.node },
   },
   ...ts.configs.recommended,

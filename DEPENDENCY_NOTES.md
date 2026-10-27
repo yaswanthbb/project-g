@@ -10,3 +10,7 @@ Compatible gRPC overrides were applied and the lockfile rebuilt. Web/native func
 These come through Expo tooling/certificate and schema dependencies. The application does not expose its own certificate-signing service or Zod validation endpoint; that does not establish absence of risk in upstream tools. A forced Expo downgrade to old incompatible releases was not applied. Updating Zod from the Expo CLI's declared v3 API to v4 is not a compatible automatic patch. Recheck official upstream fixes before treating the app as release-ready.
 
 The package lock and local tests are not a native APK security audit. No real-device or provider verification is implied.
+
+## Native build · 27 October 2026
+
+The signed ARM64 release APK compiled successfully with the locked dependency tree. Android release lint passed. Upstream Kotlin/Gradle deprecation warnings and Google Play Services Auth 21.5.0 R8 stack-map warnings were emitted. These were warnings, not compilation failures; real-device behavior has not been verified. The npm audit above was not rerun as part of this native build, and the previously recorded advisories are not claimed resolved.

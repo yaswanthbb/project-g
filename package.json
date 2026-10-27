@@ -10,8 +10,8 @@
     "dev": "npm run dev -w web",
     "build": "npm run build -w web",
     "test:web": "npm run test -w web",
-    "lint": "eslint web/src shared/src mobile/src mobile/App.tsx mobile/index.js mobile/app.config.js mobile/scripts web/vite.config.ts",
-    "format": "prettier --write web/src shared/src mobile/src mobile/App.tsx mobile/index.js mobile/app.config.js mobile/scripts web/vite.config.ts eslint.config.js",
+    "lint": "eslint web/src shared/src mobile/src mobile/App.tsx mobile/index.js mobile/app.config.js mobile/scripts mobile/plugins web/vite.config.ts",
+    "format": "prettier --write web/src shared/src mobile/src mobile/App.tsx mobile/index.js mobile/app.config.js mobile/scripts mobile/plugins web/vite.config.ts eslint.config.js",
     "check:mobile": "npm run check -w mobile",
     "test:mobile": "npm run test -w mobile"
   },

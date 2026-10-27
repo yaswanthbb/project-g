@@ -10,6 +10,10 @@ A private workspace for escnaor: one next step, manual outreach, two follow-ups,
 - `shared/`: API client, types, statuses, rupee/date formatting.
 - `HANDOVER.md`: setup, environment variable names, deployment, APK installation, and outstanding device checks.
 
+## Android installer
+
+The signed standalone ARM64 APK is `mobile/dist/project-g-1.0.0-arm64-v8a.apk` (Android 7.0+). It connects to the deployed backend and includes the matching Firebase client configuration. See `HANDOVER.md` for install/update steps and signing-key backup requirements. Physical-device login and push checks remain pending.
+
 ## Run locally
 
 Use Node 22.22+ and Python 3.14 (tested with 22.22.2 / 3.14.4).
